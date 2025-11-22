@@ -1,0 +1,102 @@
+---
+import FeedbackCard from "../ui/FeedbackCard.astro";
+import FeedbackForm from "../ui/FeedbackForm.astro";
+
+const testimonials = [
+    {
+        rating: 5,
+        text: "Un service exceptionnel ! Mon chien était très détendu après le massage. Je recommande vivement !",
+        author: "Marie D.",
+    },
+    {
+        rating: 5,
+        text: "Professionnel et à l'écoute. Mon cheval a retrouvé toute sa souplesse grâce aux massages réguliers.",
+        author: "Jean-Pierre L.",
+    },
+    {
+        rating: 5,
+        text: "Une vraie passion pour les animaux. Les résultats sont visibles dès la première séance.",
+        author: "Sophie M.",
+    },
+];
+---
+
+<section id="feedback" class="feedback">
+    <div class="section-header">
+        <span class="section-label">Témoignages</span>
+        <h2>Ce que disent nos clients</h2>
+        <div class="divider"></div>
+    </div>
+    <div class="feedback-container">
+        {
+            testimonials.map((testimonial) => (
+                <FeedbackCard
+                    rating={testimonial.rating}
+                    text={testimonial.text}
+                    author={testimonial.author}
+                />
+            ))
+        }
+    </div>
+    <FeedbackForm />
+</section>
+
+<style>
+    .feedback {
+        background: var(--secondary-color);
+        position: relative;
+    }
+
+    .feedback::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40%;
+        height: 100%;
+        background-image: url("/images/cheval-portrait.jpg");
+        background-size: cover;
+        background-position: center;
+        opacity: 0.03;
+        pointer-events: none;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .section-label {
+        display: inline-block;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--accent-color);
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+    }
+
+    .section-header h2 {
+        margin-bottom: 1rem;
+    }
+
+    .divider {
+        width: 60px;
+        height: 3px;
+        background: var(--primary-color);
+        margin: 0 auto;
+    }
+
+    .feedback-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2.5rem;
+        margin: 3rem 0;
+    }
+
+    @media (max-width: 768px) {
+        .feedback-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

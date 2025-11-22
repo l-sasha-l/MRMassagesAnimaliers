@@ -1,0 +1,179 @@
+---
+import ContactForm from "../ui/ContactForm.astro";
+
+interface ContactDetail {
+    label: string;
+    info: string[];
+    icon: string;
+}
+
+const contactDetails: ContactDetail[] = [
+    {
+        label: "Téléphone",
+        info: ["+33 X XX XX XX XX"],
+        icon: "phone",
+    },
+    {
+        label: "Email",
+        info: ["contact@massages-animalier.fr"],
+        icon: "email",
+    },
+    {
+        label: "Horaires",
+        info: ["Lundi - Samedi: 9h - 19h", "Dimanche: Sur rendez-vous"],
+        icon: "clock",
+    },
+];
+---
+
+<section id="contact" class="contact">
+    <div class="section-header">
+        <span class="section-label">Contactez-nous</span>
+        <h2>Contact</h2>
+        <div class="divider"></div>
+    </div>
+    <div class="contact-container">
+        <div class="contact-info">
+            <h3>Informations de Contact</h3>
+            <p class="contact-intro">
+                N'hésitez pas à me contacter pour toute question ou pour prendre
+                rendez-vous.
+            </p>
+            <div class="contact-details">
+                {
+                    contactDetails.map((detail) => (
+                        <div class="contact-detail">
+                            <div class="detail-icon">
+                                <div class="icon-dot" />
+                            </div>
+                            <div class="detail-content">
+                                <strong>{detail.label}</strong>
+                                {detail.info.map((line) => (
+                                    <p>{line}</p>
+                                ))}
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+        <ContactForm />
+    </div>
+</section>
+
+<style>
+    .contact {
+        background: linear-gradient(
+            180deg,
+            var(--secondary-color) 0%,
+            #faf8f2 100%
+        );
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .section-label {
+        display: inline-block;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--accent-color);
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+    }
+
+    .section-header h2 {
+        margin-bottom: 1rem;
+    }
+
+    .divider {
+        width: 60px;
+        height: 3px;
+        background: var(--primary-color);
+        margin: 0 auto;
+    }
+
+    .contact-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 3rem;
+        margin-top: 3rem;
+    }
+
+    .contact-info {
+        background: white;
+        padding: 3rem;
+        border-radius: 4px;
+        border: 1px solid var(--border-color);
+        height: fit-content;
+    }
+
+    .contact-info h3 {
+        margin-bottom: 1rem;
+    }
+
+    .contact-intro {
+        color: var(--text-medium);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+    }
+
+    .contact-details {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .contact-detail {
+        display: flex;
+        gap: 1.25rem;
+    }
+
+    .detail-icon {
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(
+            135deg,
+            var(--primary-color) 0%,
+            var(--primary-light) 100%
+        );
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon-dot {
+        width: 12px;
+        height: 12px;
+        background: var(--secondary-color);
+        border-radius: 50%;
+    }
+
+    .detail-content strong {
+        color: var(--primary-color);
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    .detail-content p {
+        margin: 0.25rem 0;
+        color: var(--text-medium);
+        font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+        .contact-container {
+            grid-template-columns: 1fr;
+        }
+
+        .contact-info {
+            padding: 2rem;
+        }
+    }
+</style>

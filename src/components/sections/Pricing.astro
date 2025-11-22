@@ -1,0 +1,479 @@
+---
+import PricingCard from "../ui/PricingCard.astro";
+
+const dogsIndividualPricing = [
+    { service: 'Massage confort "Simple" (adultes)', price: "55€" },
+    {
+        service: 'Massage confort "Simple" (jeunes/vieillissants)',
+        price: "40€",
+    },
+    { service: 'Massage enveloppement "Max"', price: "75€" },
+    { service: "Enveloppement 1 zone*", price: "7€" },
+    { service: "Enveloppement seul corps complet", price: "30€" },
+];
+
+const dogsPacksPricing = [
+    { service: "Massage prépa", price: "25€" },
+    { service: "Massage récup", price: "35€" },
+    { service: "Pack concours (prépa + récup)", price: "50€" },
+    { service: "Enveloppement 1 zone*", price: "7€" },
+];
+
+const dogsSpecialPricing = [
+    { service: 'Forfait premium: 5 Séances "Simple"', price: "260€" },
+    { service: 'Forfait Gold 10 "Simple"', price: "495€" },
+    { service: 'Forfait Mixte 10 "Simple" Inter-espèce', price: "-10%" },
+    { service: 'Forfait Prestige 10 "Max"', price: "635€" },
+];
+
+const horsesGeneralPricing = [
+    { service: 'Massage confort "Simple" (adultes)', price: "75€" },
+    { service: 'Massage confort "Simple" (bébés/retraités)', price: "60€" },
+    { service: 'Massage enveloppement "Max"', price: "110€" },
+    { service: "Drainage lymphatique", price: "50€" },
+    { service: "Enveloppement 1 zone*", price: "15€" },
+    { service: "Enveloppement seul corps complet", price: "70€" },
+];
+
+const horsesSportPricing = [
+    { service: "Massage prépa", price: "35€" },
+    { service: "Massage récup", price: "45€" },
+    { service: "Pack concours (prépa + récup)", price: "70€" },
+    { service: "Enveloppement 1 zone*", price: "15€" },
+];
+
+const horsesPacksPricing = [
+    { service: 'Forfait premium: 5 Séances "Simple"', price: "350€" },
+    { service: 'Forfait Gold 10 "Simple"', price: "675€" },
+    { service: 'Forfait Mixte 10 "Simple" Inter-espèce', price: "-10%" },
+    { service: 'Forfait Prestige 10 "Max"', price: "935€" },
+];
+---
+
+<section id="pricing" class="pricing">
+    <div class="section-header">
+        <span class="section-label">Nos Services</span>
+        <h2>Tarifs</h2>
+        <div class="divider"></div>
+    </div>
+
+    <div class="pricing-category dogs">
+        <h3 class="category-title">Massages pour Chiens</h3>
+        <div class="carousel-wrapper">
+            <div class="carousel-viewport">
+                <div class="carousel-track" id="dogsCarouselTrack">
+                    <div class="carousel-slide">
+                        <PricingCard
+                            title="Séances individuelles"
+                            items={dogsIndividualPricing}
+                            featured={true}
+                        />
+                    </div>
+                    <div class="carousel-slide">
+                        <PricingCard
+                            title="Forfaits"
+                            items={dogsPacksPricing}
+                        />
+                    </div>
+                    <div class="carousel-slide">
+                        <PricingCard
+                            title="Services spéciaux"
+                            items={dogsSpecialPricing}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-dots" id="dogsDots">
+                <button class="dot active" data-index="0" aria-label="Carte 1"
+                ></button>
+                <button class="dot" data-index="1" aria-label="Carte 2"
+                ></button>
+                <button class="dot" data-index="2" aria-label="Carte 3"
+                ></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="pricing-category horses">
+        <h3 class="category-title">Massages pour Chevaux</h3>
+        <div class="carousel-wrapper">
+            <div class="carousel-viewport">
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="carousel-slide">
+                        <PricingCard
+                            title="Pour tous"
+                            items={horsesGeneralPricing}
+                            featured={true}
+                        />
+                    </div>
+                    <div class="carousel-slide">
+                        <PricingCard
+                            title="Suivi Sportif"
+                            items={horsesSportPricing}
+                        />
+                    </div>
+                    <div class="carousel-slide">
+                        <PricingCard
+                            title="Packs**"
+                            items={horsesPacksPricing}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-dots" id="horseDots">
+                <button class="dot active" data-index="0" aria-label="Carte 1"
+                ></button>
+                <button class="dot" data-index="1" aria-label="Carte 2"
+                ></button>
+                <button class="dot" data-index="2" aria-label="Carte 3"
+                ></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="pricing-notes">
+        <p>* Zone: membre, encolure, dos</p>
+        <p>** Les forfaits sont valables 1 an à partir de la date d'achat</p>
+        <p>Les tarifs incluent le déplacement dans la zone de service</p>
+    </div>
+</section>
+
+<style>
+    .pricing {
+        background: linear-gradient(
+            180deg,
+            #faf8f2 0%,
+            var(--secondary-color) 100%
+        );
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .section-label {
+        display: inline-block;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--accent-color);
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+    }
+
+    .section-header h2 {
+        margin-bottom: 1rem;
+    }
+
+    .divider {
+        width: 60px;
+        height: 3px;
+        background: var(--primary-color);
+        margin: 0 auto;
+    }
+
+    .pricing-category {
+        margin-bottom: 5rem;
+    }
+
+    .category-title {
+        text-align: center;
+        font-size: 1.75rem;
+        color: var(--primary-color);
+        margin-bottom: 2.5rem;
+        font-weight: 600;
+    }
+
+    .pricing-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2.5rem;
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .pricing-container.single {
+        max-width: 500px;
+    }
+
+    /* Carousel Wrapper */
+    .carousel-wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .carousel-viewport {
+        overflow: hidden;
+        position: relative;
+    }
+
+    .carousel-track {
+        display: flex;
+        gap: 2rem;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        align-items: stretch;
+    }
+
+    .carousel-slide {
+        flex: 0 0 100%;
+        min-width: 0;
+        display: flex;
+    }
+
+    .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 0.75rem;
+        margin-top: 2rem;
+    }
+
+    .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--border-color);
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0;
+    }
+
+    .dot:hover {
+        background: var(--accent-color);
+        transform: scale(1.2);
+    }
+
+    .dot.active {
+        background: var(--primary-color);
+        width: 32px;
+        border-radius: 6px;
+    }
+
+    /* Desktop: Show all 3 cards in a row with same height */
+    @media (min-width: 1200px) {
+        .carousel-track {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            transform: none !important;
+            align-items: stretch;
+        }
+
+        .carousel-slide {
+            flex: initial;
+            display: contents;
+        }
+
+        .carousel-dots {
+            display: none;
+        }
+    }
+
+    /* Tablet and Mobile: One card at a time, swipe enabled */
+    @media (max-width: 1199px) {
+        .carousel-viewport {
+            padding: 0 1rem;
+            cursor: grab;
+        }
+
+        .carousel-viewport.grabbing {
+            cursor: grabbing;
+        }
+
+        .carousel-slide {
+            flex: 0 0 calc(100% - 2rem);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .pricing-category {
+            margin-bottom: 4rem;
+        }
+
+        .carousel-viewport {
+            padding: 0 0.75rem;
+        }
+
+        .carousel-dots {
+            margin-top: 1.5rem;
+        }
+    }
+
+    .pricing-notes {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .pricing-notes p {
+        font-style: italic;
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin: 0.5rem 0;
+    }
+</style>
+
+<script>
+    // Initialize both carousels
+    function initCarousel(trackId: string, dotsId: string) {
+        const track = document.getElementById(trackId);
+        const viewport = track?.parentElement;
+        const dotsContainer = document.getElementById(dotsId);
+        const dots = dotsContainer?.querySelectorAll(".dot");
+
+        if (!track || !dots) return;
+
+        let currentIndex = 0;
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+        let startTime = 0;
+
+        function updateCarousel(animate = true) {
+            // Only apply transform on smaller screens
+            if (window.innerWidth < 1200) {
+                if (!animate) {
+                    track.style.transition = "none";
+                }
+                const offset = -currentIndex * 100;
+                track.style.transform = `translateX(${offset}%)`;
+
+                if (!animate) {
+                    // Force reflow
+                    track.offsetHeight;
+                    track.style.transition = "";
+                }
+            }
+
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle("active", index === currentIndex);
+            });
+        }
+
+        function goToSlide(index: number, animate = true) {
+            const slides = track.querySelectorAll(".carousel-slide");
+            currentIndex = Math.max(0, Math.min(index, slides.length - 1));
+            updateCarousel(animate);
+        }
+
+        // Dots navigation
+        dots.forEach((dot) => {
+            dot.addEventListener("click", () => {
+                const index = parseInt(dot.getAttribute("data-index") || "0");
+                goToSlide(index);
+            });
+        });
+
+        // Touch/Swipe support
+        if (track && viewport) {
+            const handleStart = (clientX: number) => {
+                if (window.innerWidth >= 1200) return;
+                startX = clientX;
+                currentX = clientX;
+                isDragging = true;
+                startTime = Date.now();
+                viewport.classList.add("grabbing");
+            };
+
+            const handleMove = (clientX: number) => {
+                if (!isDragging || window.innerWidth >= 1200) return;
+                currentX = clientX;
+
+                const diff = currentX - startX;
+                const offset =
+                    -currentIndex * 100 + (diff / viewport.offsetWidth) * 100;
+                track.style.transition = "none";
+                track.style.transform = `translateX(${offset}%)`;
+            };
+
+            const handleEnd = () => {
+                if (!isDragging || window.innerWidth >= 1200) return;
+
+                const diff = startX - currentX;
+                const threshold = 50;
+                const velocity = Math.abs(diff) / (Date.now() - startTime);
+
+                track.style.transition = "";
+                viewport.classList.remove("grabbing");
+
+                // Check if swipe was fast enough or far enough
+                if (velocity > 0.5 || Math.abs(diff) > threshold) {
+                    if (diff > 0) {
+                        goToSlide(currentIndex + 1);
+                    } else {
+                        goToSlide(currentIndex - 1);
+                    }
+                } else {
+                    // Snap back to current slide
+                    goToSlide(currentIndex);
+                }
+
+                isDragging = false;
+            };
+
+            // Touch events
+            track.addEventListener(
+                "touchstart",
+                (e) => {
+                    handleStart(e.touches[0].clientX);
+                },
+                { passive: true },
+            );
+
+            track.addEventListener(
+                "touchmove",
+                (e) => {
+                    handleMove(e.touches[0].clientX);
+                },
+                { passive: true },
+            );
+
+            track.addEventListener("touchend", handleEnd, { passive: true });
+
+            // Mouse events
+            track.addEventListener("mousedown", (e) => {
+                e.preventDefault();
+                handleStart(e.clientX);
+            });
+
+            document.addEventListener("mousemove", (e) => {
+                handleMove(e.clientX);
+            });
+
+            document.addEventListener("mouseup", handleEnd);
+        }
+
+        // Keyboard navigation
+        document.addEventListener("keydown", (e) => {
+            if (window.innerWidth >= 1200) return;
+
+            if (e.key === "ArrowLeft") {
+                goToSlide(currentIndex - 1);
+            } else if (e.key === "ArrowRight") {
+                goToSlide(currentIndex + 1);
+            }
+        });
+
+        // Initialize
+        updateCarousel(false);
+
+        // Handle resize
+        let resizeTimer: any;
+        window.addEventListener("resize", () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                updateCarousel(false);
+            }, 250);
+        });
+    }
+
+    // Initialize both carousels
+    initCarousel("dogsCarouselTrack", "dogsDots");
+    initCarousel("carouselTrack", "horseDots");
+</script>

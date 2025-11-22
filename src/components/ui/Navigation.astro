@@ -1,0 +1,120 @@
+---
+const navLinks = [
+    { href: "#presentation", label: "Présentation" },
+    { href: "#pricing", label: "Tarifs" },
+    { href: "#maps", label: "Zones" },
+    { href: "#contact", label: "Contact" },
+    { href: "#feedback", label: "Avis" },
+];
+---
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#" class="logo-link">
+            <img src="/logo.png" alt="Massages Animalier" class="logo-img" />
+            <h1 class="logo">Massages Animalier</h1>
+        </a>
+        <ul class="nav-links">
+            {
+                navLinks.map((link) => (
+                    <li>
+                        <a href={link.href}>{link.label}</a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</nav>
+
+<style>
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 252, 244, 0.98);
+        backdrop-filter: blur(20px);
+        z-index: 100;
+        padding: 1.25rem 0;
+        border-bottom: 1px solid rgba(120, 84, 68, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo-link {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+    }
+
+    .logo-link:hover {
+        opacity: 1;
+    }
+
+    .logo-img {
+        height: 50px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .logo {
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+        letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 3rem;
+    }
+
+    .nav-links a {
+        color: var(--text-dark);
+        font-weight: 400;
+        font-size: 0.9rem;
+        letter-spacing: 0.3px;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--primary-color);
+        transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+        color: var(--primary-color);
+    }
+
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+
+    @media (max-width: 768px) {
+        .nav-container {
+            padding: 0 1.5rem;
+        }
+
+        .nav-links {
+            display: none;
+        }
+    }
+</style>

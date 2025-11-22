@@ -1,0 +1,119 @@
+---
+// Feedback Form Component
+---
+
+<div class="feedback-form-section">
+    <h3>Laissez votre avis</h3>
+    <p class="form-intro">Votre expérience compte pour nous</p>
+    <form class="feedback-form" id="feedbackForm">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="feedback-name">Nom</label>
+                <input
+                    type="text"
+                    id="feedback-name"
+                    name="name"
+                    required
+                    placeholder="Votre nom"
+                />
+            </div>
+            <div class="form-group">
+                <label for="rating">Note</label>
+                <select id="rating" name="rating">
+                    <option value="5">★★★★★ Excellent</option>
+                    <option value="4">★★★★☆ Très bien</option>
+                    <option value="3">★★★☆☆ Bien</option>
+                    <option value="2">★★☆☆☆ Moyen</option>
+                    <option value="1">★☆☆☆☆ Insuffisant</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="feedback-message">Votre avis</label>
+            <textarea
+                id="feedback-message"
+                name="message"
+                rows="4"
+                required
+                placeholder="Partagez votre expérience..."></textarea>
+        </div>
+        <button type="submit">Publier l'avis</button>
+    </form>
+</div>
+
+<style>
+    .feedback-form-section {
+        margin-top: 4rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .feedback-form-section h3 {
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-intro {
+        text-align: center;
+        color: var(--text-light);
+        margin-bottom: 2.5rem;
+    }
+
+    .feedback-form {
+        background: white;
+        padding: 3rem;
+        border-radius: 4px;
+        border: 1px solid var(--border-color);
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.75rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.625rem;
+        color: var(--text-dark);
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        color: #bbb;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .feedback-form {
+            padding: 2rem;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+    }
+</style>
+
+<script>
+    const feedbackForm = document.getElementById("feedbackForm");
+    if (feedbackForm) {
+        feedbackForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            alert("Merci pour votre avis ! Il sera publié après validation.");
+            feedbackForm.reset();
+        });
+    }
+</script>

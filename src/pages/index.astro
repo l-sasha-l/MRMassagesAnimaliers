@@ -1,0 +1,47 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/sections/Header.astro";
+import Presentation from "../components/sections/Presentation.astro";
+import Pricing from "../components/sections/Pricing.astro";
+import Maps from "../components/sections/Maps.astro";
+import Contact from "../components/sections/Contact.astro";
+import Feedback from "../components/sections/Feedback.astro";
+import Legal from "../components/sections/Legal.astro";
+import Footer from "../components/ui/Footer.astro";
+---
+
+<Layout title="Massages Animalier - Bien-être pour Chiens et Chevaux">
+    <Header
+        title="Bien-être Animal"
+        subtitle="Massages professionnels pour chiens et chevaux"
+    />
+    <Presentation />
+    <Pricing />
+    <Maps />
+    <Contact />
+    <Feedback />
+    <Legal />
+    <Footer />
+</Layout>
+
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const target = document.querySelector(
+                this.getAttribute("href") as string,
+            );
+            if (target) {
+                const navHeight = 80;
+                const targetPosition =
+                    target.getBoundingClientRect().top +
+                    window.pageYOffset -
+                    navHeight;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: "smooth",
+                });
+            }
+        });
+    });
+</script>

@@ -1,0 +1,192 @@
+---
+import FeatureCard from "../ui/FeatureCard.astro";
+
+const features = [
+    {
+        title: "Expertise",
+        description: "Formations certifiées en massage animal",
+    },
+    {
+        title: "Passion",
+        description: "Un amour profond pour les animaux",
+    },
+    {
+        title: "Qualité",
+        description: "Des soins adaptés à chaque animal",
+    },
+];
+---
+
+<section id="presentation" class="presentation">
+    <div class="section-header">
+        <span class="section-label">Qui suis-je</span>
+        <h2>Présentation</h2>
+        <div class="divider"></div>
+    </div>
+    <div class="presentation-grid">
+        <div class="presentation-image">
+            <img
+                src="/images/cheval-portrait.jpg"
+                alt="Massage animalier professionnel"
+            />
+        </div>
+        <div class="presentation-content">
+            <p class="intro-text">
+                Bonjour, moi c'est Morgane. Passionnée depuis toujours par les
+                animaux, j'ai maintenant l'honneur de travailler avec eux mais
+                surtout pour eux.
+            </p>
+            <p>
+                Chaque animal est différent, c'est pour cela que plusieurs
+                évaluations sont faites au préalable. Cela me permet de créer un
+                massage sur mesure pour chacun.
+            </p>
+            <p>
+                Pour tous les animaux, jeunes, vieillissants, sportifs, de
+                compagnie ou de loisir... Pour accompagner la croissance, en
+                préparation ou récupération de compétition, pour leur offrir un
+                moment de détente physique et mental.
+            </p>
+        </div>
+    </div>
+    <div class="presentation-features">
+        {
+            features.map((feature) => (
+                <FeatureCard
+                    title={feature.title}
+                    description={feature.description}
+                />
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .presentation {
+        background: var(--secondary-color);
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .section-label {
+        display: inline-block;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--accent-color);
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+    }
+
+    .section-header h2 {
+        margin-bottom: 1rem;
+    }
+
+    .divider {
+        width: 60px;
+        height: 3px;
+        background: var(--primary-color);
+        margin: 0 auto;
+    }
+
+    .presentation-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto 4rem;
+    }
+
+    .presentation-image {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .presentation-image::before {
+        content: "";
+        position: absolute;
+        top: -20px;
+        left: -20px;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            135deg,
+            var(--primary-color) 0%,
+            var(--accent-color) 100%
+        );
+        border-radius: 8px;
+        z-index: -1;
+    }
+
+    .presentation-image::after {
+        content: "";
+        position: absolute;
+        bottom: -20px;
+        right: -20px;
+        width: 100%;
+        height: 100%;
+        border: 2px solid var(--primary-color);
+        border-radius: 8px;
+        z-index: -1;
+    }
+
+    .presentation-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: var(--shadow-lg);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        z-index: 1;
+    }
+
+    .presentation-image:hover img {
+        transform: translate(5px, 5px);
+        box-shadow: 0 12px 40px rgba(120, 84, 68, 0.25);
+    }
+
+    .presentation-content {
+        max-width: none;
+    }
+
+    .intro-text {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        color: var(--text-dark);
+    }
+
+    .presentation-content p {
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+        color: var(--text-medium);
+        line-height: 1.8;
+    }
+
+    @media (max-width: 968px) {
+        .presentation-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+    }
+
+    .presentation-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2.5rem;
+        margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+        .presentation-features {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

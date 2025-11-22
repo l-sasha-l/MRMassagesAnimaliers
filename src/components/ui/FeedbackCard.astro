@@ -1,0 +1,75 @@
+---
+interface Props {
+    rating: number;
+    text: string;
+    author: string;
+}
+
+const { rating, text, author } = Astro.props;
+const stars = "★".repeat(rating);
+const emptyStars = "☆".repeat(5 - rating);
+---
+
+<div class="feedback-card">
+    <div class="quote-icon">"</div>
+    <div class="rating">{stars}{emptyStars}</div>
+    <p class="feedback-text">{text}</p>
+    <p class="feedback-author">{author}</p>
+</div>
+
+<style>
+    .feedback-card {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 4px;
+        border: 1px solid var(--border-color);
+        position: relative;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .feedback-card:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--accent-color);
+    }
+
+    .quote-icon {
+        position: absolute;
+        top: -10px;
+        left: 2rem;
+        font-size: 5rem;
+        color: var(--accent-color);
+        opacity: 0.2;
+        font-family: "Playfair Display", serif;
+        line-height: 1;
+    }
+
+    .rating {
+        color: #f5a623;
+        font-size: 1.25rem;
+        margin-bottom: 1.5rem;
+        letter-spacing: 2px;
+    }
+
+    .feedback-text {
+        color: var(--text-medium);
+        font-style: italic;
+        margin-bottom: 1.5rem;
+        line-height: 1.8;
+        font-size: 0.95rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .feedback-author {
+        color: var(--primary-color);
+        font-weight: 500;
+        text-align: right;
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .feedback-author::before {
+        content: "— ";
+    }
+</style>

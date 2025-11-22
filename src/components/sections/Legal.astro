@@ -1,0 +1,239 @@
+---
+interface LegalSection {
+    title: string;
+    content: string[];
+}
+
+const legalSections: LegalSection[] = [
+    {
+        title: "1. Éditeur du site",
+        content: [
+            "Nom de la société / Nom de l'entrepreneur : MR MASSAGES ANIMALIERS / Morgane RIEHL",
+            "Statut juridique : auto-entrepreneur",
+            "Siège social : Pierre-levée",
+            "Numéro de téléphone : 06.87.93.34.16",
+            "Email : mr_massages.animaliers@yahoo.com",
+            "Numéro SIRET : 98007417300017",
+            "Numéro RCS : 980074173",
+            "Directeur de publication : RIEHL Morgane",
+        ],
+    },
+    {
+        title: "2. Hébergeur du site",
+        content: [
+            "Nom de l'hébergeur : [Nom de l'hébergeur]",
+            "Adresse de l'hébergeur : [Adresse de l'hébergeur]",
+            "Téléphone de l'hébergeur : [Numéro de téléphone]",
+        ],
+    },
+    {
+        title: "3. Propriété intellectuelle",
+        content: [
+            "L'ensemble du contenu de ce site est la propriété exclusive de MR MASSAGES ANIMALIERS. Toute reproduction est interdite sans autorisation.",
+        ],
+    },
+    {
+        title: "4. Responsabilité",
+        content: [
+            "Les informations sont présentées à titre indicatif. MR MASSAGES ANIMALIERS ne saurait être tenue responsable de l'utilisation de ces informations.",
+        ],
+    },
+    {
+        title: "5. Absence de collecte de données",
+        content: ["Ce site ne collecte ni cookies ni données personnelles."],
+    },
+    {
+        title: "6. Droit applicable et juridiction",
+        content: [
+            "Le présent site est soumis au droit français. En cas de litige, les tribunaux français seront compétents.",
+        ],
+    },
+];
+---
+
+<!-- Modal -->
+<div id="legalModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1>Mentions légales</h1>
+            <button id="closeLegalModal" class="close-button">✕</button>
+        </div>
+
+        <div class="modal-body">
+            {
+                legalSections.map((section) => (
+                    <section class="legal-section">
+                        <h2>{section.title}</h2>
+                        <div class="section-content">
+                            {section.content.map((text) => (
+                                <p>{text}</p>
+                            ))}
+                        </div>
+                    </section>
+                ))
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .modal.active {
+        display: flex;
+    }
+
+    .modal-content {
+        background: var(--secondary-color);
+        border-radius: 8px;
+        max-width: 800px;
+        width: 100%;
+        max-height: 90vh;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2rem 2.5rem;
+        border-bottom: 2px solid var(--primary-color);
+        background: white;
+    }
+
+    .modal-header h1 {
+        color: var(--primary-color);
+        font-size: 1.75rem;
+        margin: 0;
+        font-family: "Playfair Display", serif;
+    }
+
+    .close-button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--text-light);
+        cursor: pointer;
+        padding: 0;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .close-button:hover {
+        background: var(--border-color);
+        color: var(--text-dark);
+    }
+
+    .modal-body {
+        overflow-y: auto;
+        padding: 2.5rem;
+    }
+
+    .legal-section {
+        padding-bottom: 2rem;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid rgba(120, 84, 68, 0.1);
+    }
+
+    .legal-section:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .legal-section h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+        font-family: "Playfair Display", serif;
+    }
+
+    .section-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .section-content p {
+        color: rgba(120, 84, 68, 0.8);
+        line-height: 1.7;
+        font-size: 0.95rem;
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .modal-header {
+            padding: 1.5rem;
+        }
+
+        .modal-header h1 {
+            font-size: 1.5rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .legal-section h2 {
+            font-size: 1.1rem;
+        }
+
+        .section-content p {
+            font-size: 0.9rem;
+        }
+</style>
+
+<script is:inline>
+    function initLegalModal() {
+        const modal = document.getElementById("legalModal");
+        const openBtns = document.querySelectorAll("[data-open-legal]");
+        const closeBtn = document.getElementById("closeLegalModal");
+
+        if (!modal || !closeBtn) return;
+
+        openBtns.forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                modal.classList.add("active");
+            });
+        });
+
+        closeBtn.addEventListener("click", () => {
+            modal.classList.remove("active");
+        });
+
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.classList.remove("active");
+            }
+        });
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initLegalModal);
+    } else {
+        initLegalModal();
+    }
+</script>
