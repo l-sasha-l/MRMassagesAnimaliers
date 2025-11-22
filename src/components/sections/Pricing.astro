@@ -442,11 +442,17 @@ const horsesPacksPricing = [
                 handleStart(e.clientX);
             });
 
-            document.addEventListener("mousemove", (e) => {
+            viewport.addEventListener("mousemove", (e) => {
+                if (!isDragging) return;
                 handleMove(e.clientX);
             });
 
-            document.addEventListener("mouseup", handleEnd);
+            viewport.addEventListener("mouseup", handleEnd);
+            viewport.addEventListener("mouseleave", () => {
+                if (isDragging) {
+                    handleEnd();
+                }
+            });
         }
 
         // Keyboard navigation
