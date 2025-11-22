@@ -364,7 +364,9 @@ const horsesPacksPricing = [
 
         // Dots navigation
         dots.forEach((dot) => {
-            dot.addEventListener("click", () => {
+            dot.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 const index = parseInt(dot.getAttribute("data-index") || "0");
                 goToSlide(index);
             });
@@ -393,7 +395,10 @@ const horsesPacksPricing = [
             };
 
             const handleEnd = () => {
-                if (!isDragging || window.innerWidth >= 1200) return;
+                if (!isDragging || window.innerWidth >= 1200) {
+                    isDragging = false;
+                    return;
+                }
 
                 const diff = startX - currentX;
                 const threshold = 50;
@@ -401,6 +406,9 @@ const horsesPacksPricing = [
 
                 track.style.transition = "";
                 viewport.classList.remove("grabbing");
+
+                // Reset dragging state immediately
+                isDragging = false;
 
                 // Check if swipe was fast enough or far enough
                 if (velocity > 0.5 || Math.abs(diff) > threshold) {
@@ -413,8 +421,6 @@ const horsesPacksPricing = [
                     // Snap back to current slide
                     goToSlide(currentIndex);
                 }
-
-                isDragging = false;
             };
 
             // Touch events
