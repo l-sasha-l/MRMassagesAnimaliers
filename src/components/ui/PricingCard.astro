@@ -61,7 +61,7 @@ const { title, items, featured = false } = Astro.props;
         );
         transform: scaleX(0);
         transform-origin: left;
-        transition: transform 0.4s ease;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .pricing-card:hover {
@@ -79,8 +79,10 @@ const { title, items, featured = false } = Astro.props;
         box-shadow: var(--shadow-md);
     }
 
+    /* Barre toujours visible sur featured (pas de transition) */
     .featured::before {
-        transform: scaleX(1);
+        transform: scaleX(1) !important;
+        transition: none !important;
     }
 
     .featured-badge {

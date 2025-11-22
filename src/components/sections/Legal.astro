@@ -52,11 +52,11 @@ const legalSections: LegalSection[] = [
 ---
 
 <!-- Modal -->
-<div id="legalModal" class="modal">
+<div id="legalModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle">
     <div class="modal-content">
         <div class="modal-header">
-            <h1>Mentions légales</h1>
-            <button id="closeLegalModal" class="close-button">✕</button>
+            <h2 id="legalModalTitle">Mentions légales</h2>
+            <button id="closeLegalModal" class="close-button" aria-label="Fermer les mentions légales">✕</button>
         </div>
 
         <div class="modal-body">

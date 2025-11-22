@@ -12,10 +12,16 @@ const navLinks = [
     <div class="nav-container">
         <a href="#" class="logo-link">
             <img src="/logo.png" alt="MR Massages Animalier" class="logo-img" />
-            <h1 class="logo">MR Massages Animalier</h1>
+            <div class="logo">MR Massages Animalier</div>
         </a>
 
-        <button class="burger-menu" id="burgerMenu" aria-label="Menu">
+        <button
+            class="burger-menu"
+            id="burgerMenu"
+            aria-label="Menu de navigation"
+            aria-expanded="false"
+            aria-controls="navLinks"
+        >
             <span></span>
             <span></span>
             <span></span>
@@ -259,12 +265,15 @@ const navLinks = [
     const overlay = document.getElementById("overlay");
 
     function toggleMenu() {
+        const isActive = navLinks?.classList.toggle("active");
         burgerMenu?.classList.toggle("active");
-        navLinks?.classList.toggle("active");
         overlay?.classList.toggle("active");
 
+        // Mettre à jour aria-expanded
+        burgerMenu?.setAttribute("aria-expanded", isActive ? "true" : "false");
+
         // Empêcher le scroll quand le menu est ouvert
-        if (navLinks?.classList.contains("active")) {
+        if (isActive) {
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "";
@@ -275,10 +284,27 @@ const navLinks = [
         burgerMenu?.classList.remove("active");
         navLinks?.classList.remove("active");
         overlay?.classList.remove("active");
+        burgerMenu?.setAttribute("aria-expanded", "false");
         document.body.style.overflow = "";
     }
 
     burgerMenu?.addEventListener("click", toggleMenu);
+
+    // Gestion du clavier sur le burger menu
+    burgerMenu?.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggleMenu();
+        }
+    });
+
+    // Fermer le menu avec la touche Escape
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && navLinks?.classList.contains("active")) {
+            closeMenu();
+            burgerMenu?.focus(); // Remettre le focus sur le burger
+        }
+    });
 
     // Fermer le menu quand on clique sur un lien
     navLinks?.querySelectorAll("a").forEach((link) => {

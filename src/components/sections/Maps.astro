@@ -36,11 +36,21 @@ const serviceAreas = [
     </div>
 
     <!-- Modal -->
-    <div id="calculatorModal" class="modal">
+    <div
+        id="calculatorModal"
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+    >
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Calculateur de frais</h3>
-                <button id="closeModal" class="close-button">✕</button>
+                <h3 id="modalTitle">Calculateur de frais</h3>
+                <button
+                    id="closeModal"
+                    class="close-button"
+                    aria-label="Fermer le calculateur">✕</button
+                >
             </div>
 
             <div class="modal-body">
