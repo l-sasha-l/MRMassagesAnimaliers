@@ -7,21 +7,31 @@ interface ContactDetail {
     icon: string;
 }
 
+interface ContactDetail {
+    label: string;
+    info: string[];
+    icon: string;
+    link?: string;
+}
+
 const contactDetails: ContactDetail[] = [
     {
         label: "Téléphone",
-        info: ["+33 X XX XX XX XX"],
-        icon: "phone",
+        info: ["06.87.93.34.16"],
+        icon: "/icones/phone-solid.svg",
+        link: "tel:0687933416",
     },
     {
         label: "Email",
-        info: ["contact@massages-animalier.fr"],
-        icon: "email",
+        info: ["mr_massages.animaliers@yahoo.com"],
+        icon: "/icones/envelope-open-text-solid.svg",
+        link: "mailto:mr_massages.animaliers@yahoo.com",
     },
     {
-        label: "Horaires",
-        info: ["Lundi - Samedi: 9h - 19h", "Dimanche: Sur rendez-vous"],
-        icon: "clock",
+        label: "Instagram",
+        info: ["@mr_massages.animaliers"],
+        icon: "/icones/instagram.svg",
+        link: "https://instagram.com/mr_massages.animaliers",
     },
 ];
 ---
@@ -42,9 +52,26 @@ const contactDetails: ContactDetail[] = [
             <div class="contact-details">
                 {
                     contactDetails.map((detail) => (
-                        <div class="contact-detail">
+                        <a
+                            href={detail.link}
+                            class="contact-detail"
+                            target={
+                                detail.link?.startsWith("http")
+                                    ? "_blank"
+                                    : undefined
+                            }
+                            rel={
+                                detail.link?.startsWith("http")
+                                    ? "noopener noreferrer"
+                                    : undefined
+                            }
+                        >
                             <div class="detail-icon">
-                                <div class="icon-dot" />
+                                <img
+                                    src={detail.icon}
+                                    alt={detail.label}
+                                    class="icon-svg"
+                                />
                             </div>
                             <div class="detail-content">
                                 <strong>{detail.label}</strong>
@@ -52,7 +79,7 @@ const contactDetails: ContactDetail[] = [
                                     <p>{line}</p>
                                 ))}
                             </div>
-                        </div>
+                        </a>
                     ))
                 }
             </div>
@@ -98,7 +125,7 @@ const contactDetails: ContactDetail[] = [
 
     .contact-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        grid-template-columns: 1fr 1fr;
         gap: 3rem;
         margin-top: 3rem;
     }
@@ -130,6 +157,15 @@ const contactDetails: ContactDetail[] = [
     .contact-detail {
         display: flex;
         gap: 1.25rem;
+        text-decoration: none;
+        padding: 1rem;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .contact-detail:hover {
+        background: var(--border-color);
+        transform: translateX(5px);
     }
 
     .detail-icon {
@@ -147,11 +183,10 @@ const contactDetails: ContactDetail[] = [
         justify-content: center;
     }
 
-    .icon-dot {
-        width: 12px;
-        height: 12px;
-        background: var(--secondary-color);
-        border-radius: 50%;
+    .icon-svg {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0) invert(1);
     }
 
     .detail-content strong {
@@ -165,15 +200,46 @@ const contactDetails: ContactDetail[] = [
         margin: 0.25rem 0;
         color: var(--text-medium);
         font-size: 0.95rem;
+        word-break: break-word;
     }
 
     @media (max-width: 768px) {
         .contact-container {
             grid-template-columns: 1fr;
+            gap: 2rem;
         }
 
         .contact-info {
             padding: 2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .contact {
+            padding: 4rem 0.75rem;
+        }
+
+        .contact-container {
+            gap: 1.5rem;
+            padding: 0;
+        }
+
+        .contact-info {
+            padding: 1.5rem;
+        }
+
+        .contact-info,
+        .contact-form {
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .detail-content p {
+            font-size: 0.85rem;
+        }
+
+        .contact-detail {
+            padding: 0.75rem;
         }
     }
 </style>

@@ -3,7 +3,7 @@ interface Props {
     title?: string;
 }
 
-const { title = "Massages Animalier - Bien-être pour Chiens et Chevaux" } =
+const { title = "MR Massages Animalier - Bien-être pour Chiens et Chevaux" } =
     Astro.props;
 ---
 
@@ -12,12 +12,104 @@ const { title = "Massages Animalier - Bien-être pour Chiens et Chevaux" } =
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/logo.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/logo.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/logo.png" />
         <meta name="generator" content={Astro.generator} />
+
+        <!-- SEO Meta Tags -->
         <meta
             name="description"
-            content="Services professionnels de massage pour chiens et chevaux"
+            content="MR Massages Animaliers - Morgane RIEHL, masseuse professionnelle pour chiens et chevaux à Boutier-Saint-Trojan (16100). Massages bien-être, sportif et rééducation pour vos animaux en Charente."
         />
+        <meta
+            name="keywords"
+            content="massage animalier, massage chien, massage cheval, Morgane RIEHL, Boutier-Saint-Trojan, Charente, 16100, bien-être animal, massage équin, massage canin, ostéopathie animale, kinésithérapie animale, Cognac"
+        />
+        <meta name="author" content="Morgane RIEHL - MR Massages Animaliers" />
+        <meta name="robots" content="index, follow" />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta
+            property="og:url"
+            content="https://www.mr-massages-animaliers.fr/"
+        />
+        <meta
+            property="og:title"
+            content="MR Massages Animaliers - Morgane RIEHL | Massage pour Chiens et Chevaux"
+        />
+        <meta
+            property="og:description"
+            content="Massages professionnels pour chiens et chevaux à Boutier-Saint-Trojan. Bien-être et performance pour vos animaux."
+        />
+        <meta
+            property="og:image"
+            content="https://www.mr-massages-animaliers.fr/logo.png"
+        />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta
+            property="twitter:url"
+            content="https://www.mr-massages-animaliers.fr/"
+        />
+        <meta
+            property="twitter:title"
+            content="MR Massages Animaliers - Morgane RIEHL | Massage pour Chiens et Chevaux"
+        />
+        <meta
+            property="twitter:description"
+            content="Massages professionnels pour chiens et chevaux à Boutier-Saint-Trojan. Bien-être et performance pour vos animaux."
+        />
+        <meta
+            property="twitter:image"
+            content="https://www.mr-massages-animaliers.fr/logo.png"
+        />
+
+        <!-- Schema.org Markup -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "LocalBusiness",
+                "name": "MR Massages Animaliers",
+                "image": "https://www.mr-massages-animaliers.fr/logo.png",
+                "description": "Services professionnels de massage pour chiens et chevaux",
+                "founder": {
+                    "@type": "Person",
+                    "name": "Morgane RIEHL"
+                },
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Boutier-Saint-Trojan",
+                    "postalCode": "16100",
+                    "addressCountry": "FR"
+                },
+                "telephone": "+33687933416",
+                "email": "mr_massages.animaliers@yahoo.com",
+                "priceRange": "€€",
+                "openingHoursSpecification": {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday",
+                        "Sunday"
+                    ],
+                    "opens": "09:00",
+                    "closes": "19:00"
+                },
+                "sameAs": ["https://instagram.com/mr_massages.animaliers"],
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "5",
+                    "reviewCount": "3"
+                }
+            }
+        </script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -61,9 +153,11 @@ const { title = "Massages Animalier - Bien-être pour Chiens et Chevaux" } =
 
     html {
         scroll-behavior: smooth;
+        overflow-x: hidden;
     }
 
     body {
+        overflow-x: hidden;
         font-family:
             "Inter",
             -apple-system,

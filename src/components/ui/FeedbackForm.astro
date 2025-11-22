@@ -108,7 +108,9 @@
 </style>
 
 <script>
-    const feedbackForm = document.getElementById("feedbackForm");
+    const feedbackForm = document.getElementById(
+        "feedbackForm",
+    ) as HTMLFormElement;
     if (feedbackForm) {
         feedbackForm.addEventListener("submit", (e) => {
             e.preventDefault();

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.mr-massages-animaliers.fr/sitemap.xml

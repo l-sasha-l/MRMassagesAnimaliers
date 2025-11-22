@@ -1,4 +1,4 @@
-# Massages Animalier - Single Page Application
+# MR Massages Animalier - Single Page Application
 
 A professional single-page website for animal massage services (dogs and horses) built with Astro and clean architecture principles.
 
