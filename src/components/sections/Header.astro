@@ -18,7 +18,11 @@ const { videoSrc = "/video/video-massage.mp4", title, subtitle } = Astro.props;
     <div class="header-overlay"></div>
     <Navigation />
     <div class="header-content">
-        <h1>{title}</h1>
+        <img
+            src="/logo-clair.png"
+            alt="MR Massages Animaliers"
+            class="header-logo"
+        />
         <p>{subtitle}</p>
         <a href="#contact" class="cta-button">Prendre Rendez-vous</a>
     </div>
@@ -75,13 +79,14 @@ const { videoSrc = "/video/video-massage.mp4", title, subtitle } = Astro.props;
         animation: fadeInUp 1.2s ease-out;
     }
 
-    .header-content h1 {
-        font-size: clamp(3rem, 6vw, 5rem);
-        color: var(--secondary-color);
-        margin-bottom: 1.5rem;
-        font-weight: 700;
-        letter-spacing: -0.03em;
-        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    .header-logo {
+        height: clamp(120px, 20vw, 200px);
+        width: auto;
+        object-fit: contain;
+        margin-bottom: 2rem;
+        filter: brightness(0) invert(1)
+            drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4));
+        animation: fadeInUp 1.2s ease-out;
     }
 
     .header-content p {
