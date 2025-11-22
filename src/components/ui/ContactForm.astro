@@ -20,7 +20,7 @@
                 type="tel"
                 id="phone"
                 name="phone"
-                placeholder="+33 6 00 00 00 00"
+                placeholder="06 00 00 00 00"
             />
         </div>
     </div>
@@ -97,24 +97,113 @@
         cursor: not-allowed;
     }
 
-    .success-message,
-    .error-message {
+    .success-message {
         padding: 1rem;
         border-radius: 4px;
         margin-bottom: 1rem;
         font-size: 0.95rem;
+        animation: slideInDown 0.5s ease-out;
+    }
+
+    @keyframes slideInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .success-message {
         background: #d4edda;
         color: #155724;
         border: 1px solid #c3e6cb;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .success-message .checkmark {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        background: #28a745;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: scaleIn 0.3s ease-out 0.2s both;
+    }
+
+    .success-message .checkmark::after {
+        content: "✓";
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    @keyframes scaleIn {
+        from {
+            transform: scale(0);
+        }
+        to {
+            transform: scale(1);
+        }
+    }
+
+    .success-message .message-content {
+        flex: 1;
     }
 
     .error-message {
-        background: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+        animation: slideInDown 0.5s ease-out;
+        background: #fff5f5;
+        color: #c53030;
+        border: 2px solid #fc8181;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        box-shadow: 0 2px 8px rgba(252, 129, 129, 0.2);
+    }
+
+    .error-message .error-icon {
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        background: #e53e3e;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: scaleIn 0.3s ease-out 0.2s both;
+        box-shadow: 0 2px 4px rgba(229, 62, 62, 0.3);
+    }
+
+    .error-message .error-icon::after {
+        content: "!";
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .error-message .message-content {
+        flex: 1;
+    }
+
+    .error-message strong {
+        color: #c53030;
+        font-size: 1.05rem;
+    }
+
+    .error-message a {
+        color: #c53030 !important;
+        font-weight: 600;
     }
 
     @media (max-width: 768px) {
@@ -159,6 +248,24 @@
     const contactForm = document.getElementById(
         "contactForm",
     ) as HTMLFormElement;
+    const phoneInput = document.getElementById("phone") as HTMLInputElement;
+
+    // Formatage automatique du numéro de téléphone
+    if (phoneInput) {
+        phoneInput.addEventListener("input", (e) => {
+            const target = e.target as HTMLInputElement;
+            let value = target.value.replace(/\D/g, ""); // Supprime tout sauf les chiffres
+
+            // Limite à 10 chiffres
+            if (value.length > 10) {
+                value = value.slice(0, 10);
+            }
+
+            // Formate en groupes de 2 chiffres (06 12 34 56 78)
+            const formatted = value.match(/.{1,2}/g)?.join(" ") || value;
+            target.value = formatted;
+        });
+    }
 
     if (contactForm) {
         contactForm.addEventListener("submit", async (e) => {
@@ -199,9 +306,39 @@
                 if (response.ok && data.success) {
                     // Message de succès
                     const successMsg = document.createElement("div");
-                    successMsg.className = "success-message";
-                    successMsg.textContent =
-                        "Merci pour votre message ! Nous vous contacterons bientôt.";
+                    successMsg.style.cssText = `
+                        padding: 1rem;
+                        border-radius: 4px;
+                        margin-bottom: 1rem;
+                        font-size: 0.95rem;
+                        animation: slideInDown 0.5s ease-out;
+                        background: #d4edda;
+                        color: #155724;
+                        border: 1px solid #c3e6cb;
+                        display: flex;
+                        align-items: flex-start;
+                        gap: 12px;
+                    `;
+                    successMsg.innerHTML = `
+                        <div style="
+                            flex-shrink: 0;
+                            width: 24px;
+                            height: 24px;
+                            background: #28a745;
+                            border-radius: 50%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            animation: scaleIn 0.3s ease-out 0.2s both;
+                            color: white;
+                            font-weight: bold;
+                            font-size: 16px;
+                        ">✓</div>
+                        <div style="flex: 1;">
+                            <strong>Message envoyé avec succès !</strong>
+                            <p style="margin: 10px 0 0 0;">Nous avons bien reçu votre demande et vous répondrons dans les plus brefs délais (généralement sous 24-48h). Un email de confirmation vous a été envoyé.</p>
+                        </div>
+                    `;
                     contactForm.insertBefore(
                         successMsg,
                         contactForm.firstChild,
@@ -213,9 +350,41 @@
             } catch (error) {
                 // Message d'erreur
                 const errorMsg = document.createElement("div");
-                errorMsg.className = "error-message";
-                errorMsg.textContent =
-                    "Une erreur est survenue. Veuillez réessayer ou nous contacter directement par email.";
+                errorMsg.style.cssText = `
+                    padding: 1rem;
+                    border-radius: 4px;
+                    margin-bottom: 1rem;
+                    font-size: 0.95rem;
+                    animation: slideInDown 0.5s ease-out;
+                    background: #fff5f5;
+                    color: #c53030;
+                    border: 2px solid #fc8181;
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 12px;
+                    box-shadow: 0 2px 8px rgba(252, 129, 129, 0.2);
+                `;
+                errorMsg.innerHTML = `
+                    <div class="error-icon" style="
+                        flex-shrink: 0;
+                        width: 28px;
+                        height: 28px;
+                        background: #e53e3e;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        animation: scaleIn 0.3s ease-out 0.2s both;
+                        box-shadow: 0 2px 4px rgba(229, 62, 62, 0.3);
+                        color: white;
+                        font-weight: bold;
+                        font-size: 18px;
+                    ">!</div>
+                    <div style="flex: 1;">
+                        <strong style="color: #c53030; font-size: 1.05rem;">Une erreur est survenue</strong>
+                        <p style="margin: 10px 0 0 0;">Veuillez réessayer ou nous contacter directement par email à <a href="mailto:mr_massages.animaliers@yahoo.com" style="color: #c53030; font-weight: 600; text-decoration: underline;">mr_massages.animaliers@yahoo.com</a></p>
+                    </div>
+                `;
                 contactForm.insertBefore(errorMsg, contactForm.firstChild);
             } finally {
                 // Réactiver le bouton

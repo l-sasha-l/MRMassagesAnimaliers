@@ -253,7 +253,7 @@ const horsesPacksPricing = [
         border-radius: 6px;
     }
 
-    /* Desktop: Show all 3 cards in a row with same height */
+    /* Large Desktop: Show all 3 cards in a row */
     @media (min-width: 1200px) {
         .carousel-track {
             display: grid !important;
@@ -273,8 +273,38 @@ const horsesPacksPricing = [
         }
     }
 
-    /* Tablet and Mobile: One card at a time, swipe enabled */
-    @media (max-width: 1199px) {
+    /* Tablet/Small Desktop: Show 2 cards at a time */
+    @media (min-width: 768px) and (max-width: 1199px) {
+        .carousel-track {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            transform: none !important;
+            align-items: stretch;
+        }
+
+        .carousel-slide {
+            flex: initial;
+            display: contents;
+        }
+
+        .carousel-slide:nth-child(3) {
+            grid-column: 1 / -1;
+            justify-self: center;
+            max-width: 450px;
+        }
+
+        .carousel-dots {
+            display: none;
+        }
+
+        .carousel-viewport {
+            padding: 0 1rem;
+        }
+    }
+
+    /* Mobile: One card at a time, swipe enabled */
+    @media (max-width: 767px) {
         .carousel-viewport {
             padding: 0 1rem;
             cursor: grab;
