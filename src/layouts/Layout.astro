@@ -130,6 +130,24 @@ const { title = "MR Massages Animalier - Bien-être pour Chiens et Chevaux" } =
 </html>
 
 <style is:global>
+    @font-face {
+        font-family: "Montserrat";
+        src: url("/fonts/Montserrat/Montserrat-VariableFont_wght.ttf")
+            format("truetype");
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "Montserrat";
+        src: url("/fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf")
+            format("truetype");
+        font-weight: 100 900;
+        font-style: italic;
+        font-display: swap;
+    }
+
     :root {
         --primary-color: #785444;
         --primary-light: #8f6b59;
@@ -159,7 +177,7 @@ const { title = "MR Massages Animalier - Bien-être pour Chiens et Chevaux" } =
     body {
         overflow-x: hidden;
         font-family:
-            "Inter",
+            "Montserrat",
             -apple-system,
             BlinkMacSystemFont,
             "Segoe UI",
@@ -182,7 +200,7 @@ const { title = "MR Massages Animalier - Bien-être pour Chiens et Chevaux" } =
     h4,
     h5,
     h6 {
-        font-family: "Playfair Display", serif;
+        font-family: "Montserrat", sans-serif;
         color: var(--primary-color);
         font-weight: 600;
         line-height: 1.3;
