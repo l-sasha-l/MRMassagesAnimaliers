@@ -516,22 +516,18 @@ const serviceAreas = [
         function displaySuggestions(items: any[]) {
             if (!suggestionsDiv) return;
 
-            suggestionsDiv.innerHTML = items
-                .map(
-                    (item) =>
-                        `<div class="suggestion-item" data-id="${item.properties.id}">
-                    ${item.properties.label}
-                </div>`,
-                )
-                .join("");
+            suggestionsDiv.innerHTML = "";
 
-            suggestionsDiv
-                .querySelectorAll(".suggestion-item")
-                .forEach((el, index) => {
-                    el.addEventListener("click", () =>
-                        handleSelectAddress(items[index]),
-                    );
-                });
+            items.forEach((item, index) => {
+                const div = document.createElement("div");
+                div.className = "suggestion-item";
+                div.dataset.id = item.properties.id;
+                div.textContent = item.properties.label;
+                div.addEventListener("click", () =>
+                    handleSelectAddress(items[index]),
+                );
+                suggestionsDiv.appendChild(div);
+            });
         }
 
         async function handleSelectAddress(feature: any) {
@@ -584,10 +580,13 @@ const serviceAreas = [
             }
         }
 
-        function showError(message) {
+        function showError(message: string) {
             if (!errorBox) return;
             errorBox.classList.remove("hidden");
-            errorBox.innerHTML = `<p>${message}</p>`;
+            const p = document.createElement("p");
+            p.textContent = message;
+            errorBox.innerHTML = "";
+            errorBox.appendChild(p);
         }
 
         function resetCalculator() {

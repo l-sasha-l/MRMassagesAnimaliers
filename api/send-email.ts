@@ -16,9 +16,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json({ success: true });
     }
 
-    // Validation
+    // Validation des champs requis
     if (!name || !email || !message) {
       return res.status(400).json({ error: "Champs requis manquants" });
+    }
+
+    // Validation du format email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: "Format d'email invalide" });
+    }
+
+    // Validation de la longueur des champs
+    if (name.length > 100 || email.length > 100 || message.length > 5000) {
+      return res
+        .status(400)
+        .json({ error: "Les données envoyées sont trop volumineuses" });
+    }
+
+    if (phone && phone.length > 20) {
+      return res.status(400).json({ error: "Numéro de téléphone invalide" });
     }
 
     // Envoyer la notification au propriétaire
