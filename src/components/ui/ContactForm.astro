@@ -6,6 +6,17 @@
     <p class="form-legend">
         <span class="required">*</span> Champs obligatoires
     </p>
+    <div class="company-field" aria-hidden="true">
+        <label for="company">Entreprise</label>
+        <input
+            type="text"
+            id="company"
+            name="company"
+            tabindex="-1"
+            autocomplete="off"
+            placeholder="Nom de votre entreprise"
+        />
+    </div>
     <div class="form-row">
         <div class="form-group">
             <label for="name"
@@ -85,6 +96,14 @@
         padding: 3rem;
         border-radius: 4px;
         border: 1px solid var(--border-color);
+    }
+
+    .company-field {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
     }
 
     .form-row {
@@ -300,6 +319,29 @@
             ) as HTMLButtonElement;
             const formData = new FormData(contactForm);
 
+            const companyField = formData.get("company");
+            if (companyField) {
+                return;
+            }
+
+            // Vérifier le délai depuis le dernier envoi
+            const lastSubmit = localStorage.getItem("lastContactSubmit");
+            const now = Date.now();
+            const COOLDOWN_MS = 60 * 1000; // 60 secondes
+
+            if (lastSubmit) {
+                const timeSinceLastSubmit = now - parseInt(lastSubmit);
+                if (timeSinceLastSubmit < COOLDOWN_MS) {
+                    const remainingSeconds = Math.ceil(
+                        (COOLDOWN_MS - timeSinceLastSubmit) / 1000,
+                    );
+                    showError(
+                        `Veuillez attendre ${remainingSeconds} secondes avant d'envoyer un nouveau message.`,
+                    );
+                    return;
+                }
+            }
+
             // Désactiver le bouton pendant l'envoi
             submitButton.disabled = true;
             submitButton.textContent = "Envoi en cours...";
@@ -322,12 +364,16 @@
                         phone: formData.get("phone"),
                         animal: formData.get("animal"),
                         message: formData.get("message"),
+                        company: formData.get("company"),
                     }),
                 });
 
                 const data = await response.json();
 
                 if (response.ok && data.success) {
+                    // Enregistrer le timestamp du dernier envoi réussi
+                    localStorage.setItem("lastContactSubmit", now.toString());
+
                     // Message de succès
                     const successMsg = document.createElement("div");
                     successMsg.setAttribute("role", "status");
@@ -362,7 +408,7 @@
                         ">✓</div>
                         <div style="flex: 1;">
                             <strong>Message envoyé avec succès !</strong>
-                            <p style="margin: 10px 0 0 0;">Nous avons bien reçu votre demande et vous répondrons dans les plus brefs délais (généralement sous 24-48h). Un email de confirmation vous a été envoyé.</p>
+                            <p style="margin: 10px 0 0 0;">Nous avons bien reçu votre demande et vous répondrons par email dans les plus brefs délais (généralement sous 24-48h).</p>
                         </div>
                     `;
                     contactForm.insertBefore(
@@ -374,51 +420,69 @@
                     throw new Error(data.error || "Échec de l'envoi");
                 }
             } catch (error) {
-                // Message d'erreur
-                const errorMsg = document.createElement("div");
-                errorMsg.setAttribute("role", "alert");
-                errorMsg.setAttribute("aria-live", "assertive");
-                errorMsg.style.cssText = `
-                    padding: 1rem;
-                    border-radius: 4px;
-                    margin-bottom: 1rem;
-                    font-size: 0.95rem;
-                    animation: slideInDown 0.5s ease-out;
-                    background: #fff5f5;
-                    color: #c53030;
-                    border: 2px solid #fc8181;
-                    display: flex;
-                    align-items: flex-start;
-                    gap: 12px;
-                    box-shadow: 0 2px 8px rgba(252, 129, 129, 0.2);
-                `;
-                errorMsg.innerHTML = `
-                    <div class="error-icon" style="
-                        flex-shrink: 0;
-                        width: 28px;
-                        height: 28px;
-                        background: #e53e3e;
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        animation: scaleIn 0.3s ease-out 0.2s both;
-                        box-shadow: 0 2px 4px rgba(229, 62, 62, 0.3);
-                        color: white;
-                        font-weight: bold;
-                        font-size: 18px;
-                    ">!</div>
-                    <div style="flex: 1;">
-                        <strong style="color: #c53030; font-size: 1.05rem;">Une erreur est survenue</strong>
-                        <p style="margin: 10px 0 0 0;">Veuillez réessayer ou nous contacter directement par email à <a href="mailto:mr_massages.animaliers@yahoo.com" style="color: #c53030; font-weight: 600; text-decoration: underline;">mr_massages.animaliers@yahoo.com</a></p>
-                    </div>
-                `;
-                contactForm.insertBefore(errorMsg, contactForm.firstChild);
+                showError(
+                    'Une erreur est survenue. Veuillez réessayer ou nous contacter directement par email à <a href="mailto:mr_massages.animaliers@yahoo.com" style="color: #c53030; font-weight: 600; text-decoration: underline;">mr_massages.animaliers@yahoo.com</a>',
+                );
             } finally {
                 // Réactiver le bouton
                 submitButton.disabled = false;
                 submitButton.textContent = "Envoyer le message";
             }
         });
+    }
+
+    // Fonction utilitaire pour afficher les erreurs
+    function showError(message: string) {
+        const contactForm = document.getElementById(
+            "contactForm",
+        ) as HTMLFormElement;
+        if (!contactForm) return;
+
+        // Supprimer les anciens messages
+        const oldMessages = contactForm.querySelectorAll(
+            ".success-message, .error-message",
+        );
+        oldMessages.forEach((msg) => msg.remove());
+
+        // Message d'erreur
+        const errorMsg = document.createElement("div");
+        errorMsg.setAttribute("role", "alert");
+        errorMsg.setAttribute("aria-live", "assertive");
+        errorMsg.style.cssText = `
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            animation: slideInDown 0.5s ease-out;
+            background: #fff5f5;
+            color: #c53030;
+            border: 2px solid #fc8181;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(252, 129, 129, 0.2);
+        `;
+        errorMsg.innerHTML = `
+            <div class="error-icon" style="
+                flex-shrink: 0;
+                width: 28px;
+                height: 28px;
+                background: #e53e3e;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: scaleIn 0.3s ease-out 0.2s both;
+                box-shadow: 0 2px 4px rgba(229, 62, 62, 0.3);
+                color: white;
+                font-weight: bold;
+                font-size: 18px;
+            ">!</div>
+            <div style="flex: 1;">
+                <strong style="color: #c53030; font-size: 1.05rem;">Une erreur est survenue</strong>
+                <p style="margin: 10px 0 0 0;">${message}</p>
+            </div>
+        `;
+        contactForm.insertBefore(errorMsg, contactForm.firstChild);
     }
 </script>
