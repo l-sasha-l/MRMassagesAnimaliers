@@ -5,14 +5,17 @@ const features = [
     {
         title: "Expertise",
         description: "Formations certifiées en massage animal",
+        icon: "expertise",
     },
     {
         title: "Passion",
         description: "Un amour profond pour les animaux",
+        icon: "passion",
     },
     {
         title: "Qualité",
         description: "Des soins adaptés à chaque animal",
+        icon: "quality",
     },
 ];
 ---
@@ -60,6 +63,7 @@ const features = [
                 <FeatureCard
                     title={feature.title}
                     description={feature.description}
+                    icon={feature.icon}
                 />
             ))
         }
