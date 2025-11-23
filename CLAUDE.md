@@ -71,9 +71,7 @@ const dogsPricing = [{ service: "...", price: "..." }]
 
 Contact form uses **Resend** API via Vercel serverless function:
 - API endpoint: `/api/send-email` (Vercel function at `api/send-email.ts`)
-- Sends two emails:
-  1. Notification to business owner (`sasha.laigle@gmail.com`)
-  2. Confirmation to customer
+- Sends notification email to business owner (`mr_massages.animaliers@yahoo.com`)
 - Requires `RESEND_API_KEY` environment variable
 - Form located in: `src/components/ui/ContactForm.astro`
 

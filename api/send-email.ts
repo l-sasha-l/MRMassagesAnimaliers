@@ -41,7 +41,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Envoyer la notification au propriétaire
     await resend.emails.send({
       from: "MR Massages Animaliers <onboarding@resend.dev>",
-      to: ["sasha.laigle@gmail.com"],
+      to: ["mr_massages.animaliers@yahoo.com"],
       subject: `Nouveau message de ${name}`,
       replyTo: email,
       html: `
