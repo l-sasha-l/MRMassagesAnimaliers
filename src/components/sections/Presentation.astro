@@ -31,21 +31,26 @@ const features = [
             />
         </div>
         <div class="presentation-content">
+            <h3>Qui suis-je ?</h3>
             <p class="intro-text">
                 Bonjour, moi c'est Morgane. Passionnée depuis toujours par les
                 animaux, j'ai maintenant l'honneur de travailler avec eux mais
                 surtout pour eux.
             </p>
+
+            <h3>Le même massage pour tous ?</h3>
             <p>
                 Chaque animal est différent, c'est pour cela que plusieurs
                 évaluations sont faites au préalable. Cela me permet de créer un
                 massage sur mesure pour chacun.
             </p>
+
+            <h3>Pour qui ? Pour quoi ?</h3>
             <p>
-                Pour tous les animaux, jeunes, vieillissants, sportifs, de
-                compagnie ou de loisir... Pour accompagner la croissance, en
-                préparation ou récupération de compétition, pour leur offrir un
-                moment de détente physique et mental.
+                Pour tous les animaux, jeunes, vieillissants, de sport ou de
+                loisir... Pour accompagner la croissance, la préparation ou la
+                récupération lors de compétitions ou simplement pour leur offrir
+                un moment de détente physique et mental.
             </p>
         </div>
     </div>
@@ -154,6 +159,18 @@ const features = [
 
     .presentation-content {
         max-width: none;
+    }
+
+    .presentation-content h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        margin-top: 2rem;
+    }
+
+    .presentation-content h3:first-child {
+        margin-top: 0;
     }
 
     .intro-text {
